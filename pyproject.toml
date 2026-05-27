@@ -1,0 +1,33 @@
+[build-system]
+requires      = ["setuptools >= 82.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retailpricescraper"
+version = "0.0.0"
+description = "A retail price scraper"
+authors = [{ name = "Gray Espinoza", email = "grey@grayespinoza.dev" }]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+keywords = ["scraping", "webscraping", "retail", "prices"]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Documentation = "https://github.com/grayespinoza/retail-price-scraper/blob/main/README.md"
+Repository    = "https://github.com/grayespinoza/retail-price-scraper"
+Issues        = "https://github.com/grayespinoza/retail-price-scraper/issues"
+
+[project.optional-dependencies]
+dev = [
+  "ruff>=0.15.14",
+  "codespell>=2.4.2",
+  "ty>=0.0.40",
+]
