@@ -9,7 +9,7 @@ description = "A retail price scraper"
 authors = [{ name = "Gray Espinoza", email = "grey@grayespinoza.dev" }]
 readme = "README.md"
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
+license = "MIT"
 keywords = ["scraping", "webscraping", "retail", "prices"]
 classifiers = [
   "Development Status :: 1 - Planning",
