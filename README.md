@@ -5,18 +5,17 @@
 Set Up Virtual Environment
 
 ```shell
-cd retailpricescraper/
-python -m venv python
-source python/bin/activate
+python -m venv .venv
+source .venv/bin/activate
 pip install playwright
 playwright install
+pip install ruff codespell ty tox
 ```
 
-Enter Virtual Environment
+Reenter Virtual Environment
 
 ```shell
-cd retailpricescraper/
-source python/bin/activate
+source .venv/bin/activate
 ```
 
 Exit Virtual Environment

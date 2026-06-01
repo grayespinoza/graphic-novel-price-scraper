@@ -5,10 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "retailpricescraper"
 version = "0.0.0"
-description = "A retail price scraper"
-authors = [{ name = "Gray Espinoza", email = "grey@grayespinoza.dev" }]
-readme = "README.md"
+dependencies = [
+  "playwright>=1.60.0"
+]
 requires-python = ">=3.10"
+authors = [{ name = "Gray Espinoza", email = "grey@grayespinoza.dev" }]
+description = "A graphic novel price scraper"
+readme = "README.md"
 license = "MIT"
 keywords = ["scraping", "webscraping", "retail", "prices"]
 classifiers = [
@@ -27,6 +30,7 @@ Issues        = "https://github.com/grayespinoza/retail-price-scraper/issues"
 
 [project.optional-dependencies]
 dev = [
+  "playwright>=1.60.0",
   "ruff>=0.15.14",
   "codespell>=2.4.2",
   "ty>=0.0.40",
