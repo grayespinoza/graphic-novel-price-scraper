@@ -11,7 +11,8 @@ class CheapGraphicNovels(Scraper):
         page.set_default_timeout(5000)
 
         await page.goto(
-            f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}"
+            f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}",
+            timeout=10000,
         )
 
         title = None

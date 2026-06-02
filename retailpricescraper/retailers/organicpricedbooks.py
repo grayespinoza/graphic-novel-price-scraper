@@ -10,7 +10,9 @@ class OrganicPricedBooks(Scraper):
         page = await self.browser.new_page()
         page.set_default_timeout(5000)
 
-        await page.goto(f"https://www.panelboundcomics.com/search?q={isbn}")
+        await page.goto(
+            f"https://www.panelboundcomics.com/search?q={isbn}", timeout=10000
+        )
 
         title = None
         price = None

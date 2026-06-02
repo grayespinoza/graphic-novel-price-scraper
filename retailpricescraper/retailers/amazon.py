@@ -10,7 +10,9 @@ class Amazon(Scraper):
         page = await self.browser.new_page()
         page.set_default_timeout(5000)
 
-        await page.goto(f"https://www.amazon.com/s?k={isbn}&i=stripbooks")
+        await page.goto(
+            f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=10000
+        )
 
         title = None
         price = None
