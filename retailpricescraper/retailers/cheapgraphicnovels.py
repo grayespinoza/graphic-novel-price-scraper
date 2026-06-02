@@ -8,21 +8,37 @@ class CheapGraphicNovels(Scraper):
 
     async def scrape(self, isbn: str) -> GraphicNovel:
         page = await self.browser.new_page()
+        page.set_default_timeout(5000)
 
         await page.goto(
             f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}"
         )
 
-        title = await page.locator(".fn.url").text_content()
-        price_text = await page.locator(".price.product-price").text_content()
-        href = await page.locator(".fn.url").get_attribute("href")
+        title = None
+        price = None
+        url = None
+
+        # TODO: filter out (NICK AND DENT)
+        # Using ".fn.url:not(:has-text('Nick and Dent'))" works, but we would need a different solution for price.
+        # Tried f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}&sortOrder=asc", but that has no effect.
+
+        try:
+            title = (await page.locator(".fn.url").first.text_content()).strip()
+
+            price_text = await page.locator(".price.product-price").first.text_content()
+            price = float(price_text.replace("$", "").strip())
+
+            href = (await page.locator(".fn.url").first.get_attribute("href")).strip()
+            url = f"https://cheapgraphicnovels.com/{href}"
+        except Exception as e:
+            print(f"Unable to scrape {isbn} from Cheap Graphic Novels: {e}")
 
         await page.close()
 
         return GraphicNovel(
             isbn=isbn,
-            title=title,
-            price=float(price_text.replace("$", "").strip()),
             retailer="Cheap Graphic Novels",
-            url=f"https://cheapgraphicnovels.com/{href}",
+            title=title,
+            price=price,
+            url=url,
         )
