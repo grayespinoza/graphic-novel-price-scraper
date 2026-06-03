@@ -29,8 +29,10 @@ class OrganicPricedBooks(Scraper):
             price = float(price_text.replace("$", "").replace("USD", "").strip())
 
             href = (
-                await page.locator("a.full-unstyled-link").first.get_attribute("href")
-            ).strip()
+                (await page.locator("a.full-unstyled-link").first.get_attribute("href"))
+                .strip()
+                .split("?", 1)[0]
+            )
             url = f"https://www.panelboundcomics.com{href}"
         except Exception as e:
             print(f"Unable to scrape {isbn} from Organic Priced Books: {e}")
