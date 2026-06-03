@@ -2,6 +2,7 @@ import asyncio
 import csv
 import os
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from playwright.async_api import async_playwright
 
@@ -43,7 +44,7 @@ async def main():
         for price in prices:
             writer.writerow(
                 [
-                    datetime.now().strftime("%y%m%d"),
+                    datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%y%m%d"),
                     price.isbn,
                     price.retailer,
                     price.title,
