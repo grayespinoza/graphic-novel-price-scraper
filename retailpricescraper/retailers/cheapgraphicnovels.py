@@ -8,11 +8,11 @@ class CheapGraphicNovels(Scraper):
 
     async def scrape(self, isbn: str) -> GraphicNovel:
         page = await self.browser.new_page()
-        page.set_default_timeout(5000)
+        page.set_default_timeout(8000)
 
         await page.goto(
             f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}",
-            timeout=10000,
+            timeout=12000,
         )
 
         title = None
@@ -29,7 +29,11 @@ class CheapGraphicNovels(Scraper):
             price_text = await page.locator(".price.product-price").first.text_content()
             price = float(price_text.replace("$", "").strip())
 
-            href = (await page.locator(".fn.url").first.get_attribute("href")).strip()
+            href = (
+                (await page.locator(".fn.url").first.get_attribute("href"))
+                .strip()
+                .split("?", 1)[0]
+            )
             url = f"https://cheapgraphicnovels.com/{href}"
         except Exception as e:
             print(f"Unable to scrape {isbn} from Cheap Graphic Novels: {e}")

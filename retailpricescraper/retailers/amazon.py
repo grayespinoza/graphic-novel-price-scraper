@@ -8,10 +8,10 @@ class Amazon(Scraper):
 
     async def scrape(self, isbn: str) -> GraphicNovel:
         page = await self.browser.new_page()
-        page.set_default_timeout(5000)
+        page.set_default_timeout(8000)
 
         await page.goto(
-            f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=10000
+            f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=12000
         )
 
         title = None

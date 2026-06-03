@@ -8,10 +8,10 @@ class OrganicPricedBooks(Scraper):
 
     async def scrape(self, isbn: str) -> GraphicNovel:
         page = await self.browser.new_page()
-        page.set_default_timeout(5000)
+        page.set_default_timeout(8000)
 
         await page.goto(
-            f"https://www.panelboundcomics.com/search?q={isbn}", timeout=10000
+            f"https://www.panelboundcomics.com/search?q={isbn}", timeout=12000
         )
 
         title = None
