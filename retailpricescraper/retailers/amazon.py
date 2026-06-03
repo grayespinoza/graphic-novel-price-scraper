@@ -32,10 +32,14 @@ class Amazon(Scraper):
             price = float(f"{price_whole}{price_fraction}")
 
             href = (
-                await page.locator("div[data-cy='title-recipe'] a").first.get_attribute(
-                    "href"
+                (
+                    await page.locator(
+                        "div[data-cy='title-recipe'] a"
+                    ).first.get_attribute("href")
                 )
-            ).strip()
+                .strip()
+                .split("?", 1)[0]
+            )
             url = f"https://www.amazon.com{href}"
         except Exception as e:
             print(f"Unable to scrape {isbn} from Amazon: {e}")
