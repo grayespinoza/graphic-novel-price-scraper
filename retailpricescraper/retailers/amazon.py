@@ -7,7 +7,13 @@ class Amazon(Scraper):
         self.browser = browser
 
     async def scrape(self, isbn: str) -> GraphicNovel:
-        page = await self.browser.new_page()
+        context = await self.browser.new_context(
+            user_agent="Mozilla/5.0 ... Chrome/137",
+            viewport={"width": 1280, "height": 800},
+            locale="en-US",
+        )
+
+        page = await context.new_page()
         page.set_default_timeout(8000)
 
         await page.goto(
