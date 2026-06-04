@@ -35,10 +35,20 @@ async def main():
 
         await browser.close()
 
-    with open("prices.csv", "a", newline="", encoding="utf-8") as csvfile:
+    with open(
+        f"prices_{datetime.now(ZoneInfo('America/Los_Angeles')).strftime('%y%m%d')}.csv",
+        "a",
+        newline="",
+        encoding="utf-8",
+    ) as csvfile:
         writer = csv.writer(csvfile)
 
-        if os.stat("prices.csv").st_size == 0:
+        if (
+            os.stat(
+                f"prices_{datetime.now(ZoneInfo('America/Los_Angeles')).strftime('%y%m%d')}.csv"
+            ).st_size
+            == 0
+        ):
             writer.writerow(["date", "isbn", "retailer", "title", "price", "url"])
 
         for price in prices:
