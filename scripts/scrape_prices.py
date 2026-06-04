@@ -11,7 +11,11 @@ from retailpricescraper.retailers.barnesandnoble import BarnesAndNoble
 from retailpricescraper.retailers.cheapgraphicnovels import CheapGraphicNovels
 from retailpricescraper.retailers.organicpricedbooks import OrganicPricedBooks
 
-with open("isbns.csv") as csvfile:
+with open(
+    "isbns.csv",
+    newline="",
+    encoding="utf-8",
+) as csvfile:
     isbns = list(csv.reader(csvfile))
 
 
@@ -29,8 +33,8 @@ async def main():
         ]
 
         for retailer in retailers:
-            for isbn in isbns:
-                price = await retailer.scrape(isbn[0])
+            for isbn, title in isbns:
+                price = await retailer.scrape(isbn, title)
                 prices.append(price)
 
         await browser.close()

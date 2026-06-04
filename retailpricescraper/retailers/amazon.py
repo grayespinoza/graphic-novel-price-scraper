@@ -6,7 +6,7 @@ class Amazon(Scraper):
     def __init__(self, browser):
         self.browser = browser
 
-    async def scrape(self, isbn: str) -> GraphicNovel:
+    async def scrape(self, isbn: str, title: str) -> GraphicNovel:
         context = await self.browser.new_context(
             user_agent="Mozilla/5.0 ... Chrome/137",
             viewport={"width": 1280, "height": 800},
@@ -20,7 +20,7 @@ class Amazon(Scraper):
             f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=12000
         )
 
-        title = None
+        title = ""
         price = None
         url = None
 

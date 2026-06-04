@@ -6,7 +6,7 @@ class CheapGraphicNovels(Scraper):
     def __init__(self, browser):
         self.browser = browser
 
-    async def scrape(self, isbn: str) -> GraphicNovel:
+    async def scrape(self, isbn: str, title: str) -> GraphicNovel:
         page = await self.browser.new_page()
         page.set_default_timeout(8000)
 
@@ -15,7 +15,7 @@ class CheapGraphicNovels(Scraper):
             timeout=12000,
         )
 
-        title = None
+        title = ""
         price = None
         url = None
 
