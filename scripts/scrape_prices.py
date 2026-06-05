@@ -9,6 +9,7 @@ from playwright.async_api import async_playwright
 from retailpricescraper.retailers.amazon import Amazon
 from retailpricescraper.retailers.barnesandnoble import BarnesAndNoble
 from retailpricescraper.retailers.cheapgraphicnovels import CheapGraphicNovels
+from retailpricescraper.retailers.instocktrades import InStockTrades
 from retailpricescraper.retailers.organicpricedbooks import OrganicPricedBooks
 
 with open(
@@ -30,6 +31,7 @@ async def main():
             BarnesAndNoble(browser),
             OrganicPricedBooks(browser),
             Amazon(browser),
+            InStockTrades(browser),
         ]
 
         for retailer in retailers:
