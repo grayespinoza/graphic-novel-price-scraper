@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "graphicnovelpricescraper"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
   "playwright>=1.60.0"
 ]
@@ -15,7 +15,7 @@ readme = "README.md"
 license = "MIT"
 keywords = ["scraping", "webscraping", "retail", "prices"]
 classifiers = [
-  "Development Status :: 1 - Planning",
+  "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
