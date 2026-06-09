@@ -19,15 +19,15 @@ class InStockTrades(Scraper):
         page = await context.new_page()
         page.set_default_timeout(8000)
 
-        await page.goto(
-            f"https://www.instocktrades.com/search?term={quote_plus(title)}",
-            timeout=180000,
-        )
-
         price = None
         url = None
 
         try:
+            await page.goto(
+                f"https://www.instocktrades.com/search?term={quote_plus(title)}",
+                timeout=180000,
+            )
+
             title_text = await page.locator(".title").first.inner_text()
 
             title_text = title_text.lower()

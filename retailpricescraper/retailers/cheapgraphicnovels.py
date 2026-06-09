@@ -16,11 +16,6 @@ class CheapGraphicNovels(Scraper):
         page = await context.new_page()
         page.set_default_timeout(8000)
 
-        await page.goto(
-            f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}",
-            timeout=12000,
-        )
-
         title = ""
         price = None
         url = None
@@ -30,6 +25,11 @@ class CheapGraphicNovels(Scraper):
         # Tried f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}&sortOrder=asc", but that has no effect.
 
         try:
+            await page.goto(
+                f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}",
+                timeout=12000,
+            )
+
             title = (await page.locator(".fn.url").first.text_content()).strip()
 
             price_text = await page.locator(".price.product-price").first.text_content()

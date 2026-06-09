@@ -16,15 +16,15 @@ class Amazon(Scraper):
         page = await context.new_page()
         page.set_default_timeout(8000)
 
-        await page.goto(
-            f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=12000
-        )
-
         title = ""
         price = None
         url = None
 
         try:
+            await page.goto(
+                f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=12000
+            )
+
             title = (
                 await page.locator(
                     "div[data-cy='title-recipe'] h2 span"

@@ -16,15 +16,15 @@ class BarnesAndNoble(Scraper):
         page = await context.new_page()
         page.set_default_timeout(8000)
 
-        await page.goto(
-            f"https://www.barnesandnoble.com/search?q={isbn}", timeout=12000
-        )
-
         title = ""
         price = None
         url = None
 
         try:
+            await page.goto(
+                f"https://www.barnesandnoble.com/search?q={isbn}", timeout=12000
+            )
+
             title = (
                 await page.locator(".product-item-card__title").first.text_content()
             ).strip()

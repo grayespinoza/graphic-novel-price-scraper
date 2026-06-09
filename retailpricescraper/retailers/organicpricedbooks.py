@@ -16,14 +16,14 @@ class OrganicPricedBooks(Scraper):
         page = await context.new_page()
         page.set_default_timeout(8000)
 
-        await page.goto(
-            f"https://www.panelboundcomics.com/search?q={title}", timeout=12000
-        )
-
         price = None
         url = None
 
         try:
+            await page.goto(
+                f"https://www.panelboundcomics.com/search?q={title}", timeout=12000
+            )
+
             title_text = (
                 await page.locator("a.full-unstyled-link").first.inner_text()
             ).strip()
