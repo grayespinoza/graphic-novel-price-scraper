@@ -44,12 +44,14 @@ class InStockTrades(Scraper):
                 title = await page.locator(".title").first.inner_text()
 
                 price_text = await page.locator(".price").first.inner_text()
-                price = float(price_text.replace("$", "").strip())
+                if price_text:
+                    price_text = price_text.strip()
+                    price = float(price_text.replace("$", ""))
 
                 href = await page.locator(".title a").first.get_attribute("href")
                 if href:
                     href = href.strip().split("?", 1)[0]
-                url = f"https://www.instocktrades.com{href}"
+                    url = f"https://www.instocktrades.com{href}"
             else:
                 title = ""
         except Exception as e:

@@ -32,7 +32,9 @@ class BarnesAndNoble(Scraper):
             price_text = await page.locator(
                 ".product-item-card__current-price"
             ).first.text_content()
-            price = float(price_text.replace("$", "").strip())
+            if price_text:
+                price_text = price_text.strip()
+                price = float(price_text.replace("$", ""))
 
             href = (
                 await page.locator(".product-item-card__title")
@@ -41,7 +43,7 @@ class BarnesAndNoble(Scraper):
             )
             if href:
                 href = href.strip().split("?", 1)[0]
-            url = f"https://www.barnesandnoble.com{href}"
+                url = f"https://www.barnesandnoble.com{href}"
         except Exception as e:
             print(f"Unable to scrape {isbn} from Barnes & Noble: {e}")
         finally:

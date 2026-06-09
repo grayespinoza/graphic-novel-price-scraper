@@ -34,14 +34,16 @@ class OrganicPricedBooks(Scraper):
                 price_text = await page.locator(
                     "span.price-item.price-item--sale.price-item--last"
                 ).first.inner_text()
-                price = float(price_text.replace("$", "").replace("USD", "").strip())
+                if price_text:
+                    price_text = price_text.strip()
+                    price = float(price_text.replace("$", "").replace("USD", ""))
 
                 href = await page.locator("a.full-unstyled-link").first.get_attribute(
                     "href"
                 )
                 if href:
                     href = href.strip().split("?", 1)[0]
-                url = f"https://www.panelboundcomics.com{href}"
+                    url = f"https://www.panelboundcomics.com{href}"
             else:
                 title = ""
         except Exception as e:
