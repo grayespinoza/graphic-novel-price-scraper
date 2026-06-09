@@ -30,10 +30,11 @@ class InStockTrades(Scraper):
 
             title_text = await page.locator(".title").first.inner_text()
 
-            title_text = title_text.lower()
-            title_text = re.sub(r"\b(tp|hc)\b", "", title_text)
-            title_text = re.sub(r"[^a-z0-9\s]", " ", title_text)
-            title_text = re.sub(r"\s+", " ", title_text).strip()
+            if title_text:
+                title_text = title_text.lower()
+                title_text = re.sub(r"\b(tp|hc)\b", "", title_text)
+                title_text = re.sub(r"[^a-z0-9\s]", " ", title_text)
+                title_text = re.sub(r"\s+", " ", title_text).strip()
 
             title = title.lower()
             title = re.sub(r"[^a-z0-9\s]", " ", title)
@@ -45,18 +46,16 @@ class InStockTrades(Scraper):
                 price_text = await page.locator(".price").first.inner_text()
                 price = float(price_text.replace("$", "").strip())
 
-                href = (
-                    (await page.locator(".title a").first.get_attribute("href"))
-                    .strip()
-                    .split("?", 1)[0]
-                )
+                href = await page.locator(".title a").first.get_attribute("href")
+                if href:
+                    href = href.strip().split("?", 1)[0]
                 url = f"https://www.instocktrades.com{href}"
             else:
                 title = ""
         except Exception as e:
             print(f"Unable to scrape {isbn} from In Stock Trades: {e}")
-
-        await page.close()
+        finally:
+            await context.close()
 
         return GraphicNovel(
             isbn=isbn,

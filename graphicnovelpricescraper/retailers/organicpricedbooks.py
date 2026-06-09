@@ -24,9 +24,9 @@ class OrganicPricedBooks(Scraper):
                 f"https://www.panelboundcomics.com/search?q={title}", timeout=12000
             )
 
-            title_text = (
-                await page.locator("a.full-unstyled-link").first.inner_text()
-            ).strip()
+            title_text = await page.locator("a.full-unstyled-link").first.inner_text()
+            if title_text:
+                title_text = title_text.strip()
 
             if title.lower() in title_text.lower():
                 title = title_text
@@ -36,22 +36,18 @@ class OrganicPricedBooks(Scraper):
                 ).first.inner_text()
                 price = float(price_text.replace("$", "").replace("USD", "").strip())
 
-                href = (
-                    (
-                        await page.locator("a.full-unstyled-link").first.get_attribute(
-                            "href"
-                        )
-                    )
-                    .strip()
-                    .split("?", 1)[0]
+                href = await page.locator("a.full-unstyled-link").first.get_attribute(
+                    "href"
                 )
+                if href:
+                    href = href.strip().split("?", 1)[0]
                 url = f"https://www.panelboundcomics.com{href}"
             else:
                 title = ""
         except Exception as e:
             print(f"Unable to scrape {isbn} from Organic Priced Books: {e}")
-
-        await page.close()
+        finally:
+            await context.close()
 
         return GraphicNovel(
             isbn=isbn,

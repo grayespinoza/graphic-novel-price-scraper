@@ -25,9 +25,9 @@ class BarnesAndNoble(Scraper):
                 f"https://www.barnesandnoble.com/search?q={isbn}", timeout=12000
             )
 
-            title = (
-                await page.locator(".product-item-card__title").first.text_content()
-            ).strip()
+            title = await page.locator(".product-item-card__title").first.text_content()
+            if title:
+                title = title.strip()
 
             price_text = await page.locator(
                 ".product-item-card__current-price"
@@ -35,19 +35,17 @@ class BarnesAndNoble(Scraper):
             price = float(price_text.replace("$", "").strip())
 
             href = (
-                (
-                    await page.locator(".product-item-card__title")
-                    .first.locator("xpath=ancestor::a")
-                    .get_attribute("href")
-                )
-                .strip()
-                .split("?", 1)[0]
+                await page.locator(".product-item-card__title")
+                .first.locator("xpath=ancestor::a")
+                .get_attribute("href")
             )
+            if href:
+                href = href.strip().split("?", 1)[0]
             url = f"https://www.barnesandnoble.com{href}"
         except Exception as e:
             print(f"Unable to scrape {isbn} from Barnes & Noble: {e}")
-
-        await page.close()
+        finally:
+            await context.close()
 
         return GraphicNovel(
             isbn=isbn,

@@ -25,11 +25,11 @@ class Amazon(Scraper):
                 f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=12000
             )
 
-            title = (
-                await page.locator(
-                    "div[data-cy='title-recipe'] h2 span"
-                ).first.text_content()
-            ).strip()
+            title = await page.locator(
+                "div[data-cy='title-recipe'] h2 span"
+            ).first.text_content()
+            if title:
+                title = title.strip()
 
             price_whole = await page.locator("span.a-price-whole").first.text_content()
             price_fraction = await page.locator(
@@ -37,20 +37,16 @@ class Amazon(Scraper):
             ).first.text_content()
             price = float(f"{price_whole}{price_fraction}")
 
-            href = (
-                (
-                    await page.locator(
-                        "div[data-cy='title-recipe'] a"
-                    ).first.get_attribute("href")
-                )
-                .strip()
-                .split("?", 1)[0]
-            )
+            href = await page.locator(
+                "div[data-cy='title-recipe'] a"
+            ).first.get_attribute("href")
+            if href:
+                href = href.strip().split("?", 1)[0]
             url = f"https://www.amazon.com{href}"
         except Exception as e:
             print(f"Unable to scrape {isbn} from Amazon: {e}")
-
-        await page.close()
+        finally:
+            await context.close()
 
         return GraphicNovel(
             isbn=isbn,

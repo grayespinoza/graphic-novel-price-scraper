@@ -30,21 +30,21 @@ class CheapGraphicNovels(Scraper):
                 timeout=12000,
             )
 
-            title = (await page.locator(".fn.url").first.text_content()).strip()
+            title = await page.locator(".fn.url").first.text_content()
+            if title:
+                title = title.strip()
 
             price_text = await page.locator(".price.product-price").first.text_content()
             price = float(price_text.replace("$", "").strip())
 
-            href = (
-                (await page.locator(".fn.url").first.get_attribute("href"))
-                .strip()
-                .split("?", 1)[0]
-            )
+            href = await page.locator(".fn.url").first.get_attribute("href")
+            if href:
+                href = href.strip().split("?", 1)[0]
             url = f"https://cheapgraphicnovels.com/{href}"
         except Exception as e:
             print(f"Unable to scrape {isbn} from Cheap Graphic Novels: {e}")
-
-        await page.close()
+        finally:
+            await context.close()
 
         return GraphicNovel(
             isbn=isbn,
