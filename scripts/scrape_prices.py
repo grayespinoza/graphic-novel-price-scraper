@@ -6,11 +6,11 @@ from zoneinfo import ZoneInfo
 
 from playwright.async_api import async_playwright
 
-from retailpricescraper.retailers.amazon import Amazon
-from retailpricescraper.retailers.barnesandnoble import BarnesAndNoble
-from retailpricescraper.retailers.cheapgraphicnovels import CheapGraphicNovels
-from retailpricescraper.retailers.instocktrades import InStockTrades
-from retailpricescraper.retailers.organicpricedbooks import OrganicPricedBooks
+from graphicnovelpricescraper.retailers.amazon import Amazon
+from graphicnovelpricescraper.retailers.barnesandnoble import BarnesAndNoble
+from graphicnovelpricescraper.retailers.cheapgraphicnovels import CheapGraphicNovels
+from graphicnovelpricescraper.retailers.instocktrades import InStockTrades
+from graphicnovelpricescraper.retailers.organicpricedbooks import OrganicPricedBooks
 
 with open(
     "isbns.csv",

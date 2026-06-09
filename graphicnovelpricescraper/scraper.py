@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from retailpricescraper.data import GraphicNovel
+from graphicnovelpricescraper.data import GraphicNovel
 
 
 class Scraper(ABC):

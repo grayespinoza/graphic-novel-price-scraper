@@ -1,8 +1,8 @@
 import re
 from urllib.parse import quote_plus
 
-from retailpricescraper.data import GraphicNovel
-from retailpricescraper.scraper import Scraper
+from graphicnovelpricescraper.data import GraphicNovel
+from graphicnovelpricescraper.scraper import Scraper
 
 
 class InStockTrades(Scraper):

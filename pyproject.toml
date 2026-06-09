@@ -3,7 +3,7 @@ requires      = ["setuptools >= 82.0.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "retailpricescraper"
+name = "graphicnovelpricescraper"
 version = "0.0.0"
 dependencies = [
   "playwright>=1.60.0"
@@ -24,9 +24,9 @@ classifiers = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/grayespinoza/retail-price-scraper/blob/main/README.md"
-Repository    = "https://github.com/grayespinoza/retail-price-scraper"
-Issues        = "https://github.com/grayespinoza/retail-price-scraper/issues"
+Documentation = "https://github.com/grayespinoza/graphic-novel-price-scraper/blob/main/README.md"
+Repository    = "https://github.com/grayespinoza/graphic-novel-price-scraper"
+Issues        = "https://github.com/grayespinoza/graphic-novel-price-scraper/issues"
 
 [project.optional-dependencies]
 dev = [

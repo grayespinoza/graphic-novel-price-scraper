@@ -1,8 +1,8 @@
-from retailpricescraper.data import GraphicNovel
-from retailpricescraper.scraper import Scraper
+from graphicnovelpricescraper.data import GraphicNovel
+from graphicnovelpricescraper.scraper import Scraper
 
 
-class BarnesAndNoble(Scraper):
+class Amazon(Scraper):
     def __init__(self, browser):
         self.browser = browser
 
@@ -22,36 +22,39 @@ class BarnesAndNoble(Scraper):
 
         try:
             await page.goto(
-                f"https://www.barnesandnoble.com/search?q={isbn}", timeout=12000
+                f"https://www.amazon.com/s?k={isbn}&i=stripbooks", timeout=12000
             )
 
             title = (
-                await page.locator(".product-item-card__title").first.text_content()
+                await page.locator(
+                    "div[data-cy='title-recipe'] h2 span"
+                ).first.text_content()
             ).strip()
 
-            price_text = await page.locator(
-                ".product-item-card__current-price"
+            price_whole = await page.locator("span.a-price-whole").first.text_content()
+            price_fraction = await page.locator(
+                "span.a-price-fraction"
             ).first.text_content()
-            price = float(price_text.replace("$", "").strip())
+            price = float(f"{price_whole}{price_fraction}")
 
             href = (
                 (
-                    await page.locator(".product-item-card__title")
-                    .first.locator("xpath=ancestor::a")
-                    .get_attribute("href")
+                    await page.locator(
+                        "div[data-cy='title-recipe'] a"
+                    ).first.get_attribute("href")
                 )
                 .strip()
                 .split("?", 1)[0]
             )
-            url = f"https://www.barnesandnoble.com{href}"
+            url = f"https://www.amazon.com{href}"
         except Exception as e:
-            print(f"Unable to scrape {isbn} from Barnes & Noble: {e}")
+            print(f"Unable to scrape {isbn} from Amazon: {e}")
 
         await page.close()
 
         return GraphicNovel(
             isbn=isbn,
-            retailer="Barnes & Noble",
+            retailer="Amazon",
             title=title,
             price=price,
             url=url,

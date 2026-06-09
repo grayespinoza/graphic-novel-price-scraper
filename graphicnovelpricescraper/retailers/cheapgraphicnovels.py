@@ -1,5 +1,5 @@
-from retailpricescraper.data import GraphicNovel
-from retailpricescraper.scraper import Scraper
+from graphicnovelpricescraper.data import GraphicNovel
+from graphicnovelpricescraper.scraper import Scraper
 
 
 class CheapGraphicNovels(Scraper):
