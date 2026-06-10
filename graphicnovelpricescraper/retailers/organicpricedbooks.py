@@ -46,6 +46,7 @@ class OrganicPricedBooks(Scraper):
                     title = ""
             except Exception as e:
                 print(f"Unable to scrape {isbn} from Organic Priced Books: {e}")
+                title = ""
             finally:
                 await page.close()
 

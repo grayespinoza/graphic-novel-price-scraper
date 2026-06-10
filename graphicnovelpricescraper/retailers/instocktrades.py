@@ -50,6 +50,7 @@ class InStockTrades(Scraper):
                     title = ""
             except Exception as e:
                 print(f"Unable to scrape {isbn} from In Stock Trades: {e}")
+                title = ""
             finally:
                 await page.close()
 
