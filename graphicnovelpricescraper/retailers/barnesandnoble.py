@@ -17,7 +17,6 @@ class BarnesAndNoble(Scraper):
             try:
                 await page.goto(
                     f"https://www.barnesandnoble.com/search?q={isbn}",
-                    timeout=12000,
                     wait_until="domcontentloaded",
                 )
 

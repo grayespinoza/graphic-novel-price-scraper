@@ -19,7 +19,6 @@ class InStockTrades(Scraper):
             try:
                 await page.goto(
                     f"https://www.instocktrades.com/search?term={quote_plus(title)}",
-                    timeout=180000,
                     wait_until="domcontentloaded",
                 )
 

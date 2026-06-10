@@ -8,7 +8,7 @@ class Scraper(ABC):
     def __init__(self, browser):
         self.browser = browser
         self.context = None
-        self.semaphore = asyncio.Semaphore(5)
+        self.semaphore = asyncio.Semaphore(6)
 
     async def create_context(self):
         self.context = await self.browser.new_context(
@@ -17,6 +17,18 @@ class Scraper(ABC):
             viewport={"width": 1920, "height": 1080},
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
         )
+        await self.context.route("**/*", self._block_resources)
+        self.context.set_default_navigation_timeout(18000)
+
+    async def _block_resources(self, route):
+        if route.request.resource_type in {
+            "image",
+            "media",
+            "font",
+        }:
+            await route.abort()
+        else:
+            await route.continue_()
 
     @abstractmethod
     async def scrape(self, isbn: int, title: str) -> GraphicNovel:

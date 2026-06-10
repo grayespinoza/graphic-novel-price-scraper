@@ -17,7 +17,6 @@ class CheapGraphicNovels(Scraper):
             try:
                 await page.goto(
                     f"https://cheapgraphicnovels.com/?target=search&mode=search&substring={isbn}",
-                    timeout=12000,
                     wait_until="domcontentloaded",
                 )
 

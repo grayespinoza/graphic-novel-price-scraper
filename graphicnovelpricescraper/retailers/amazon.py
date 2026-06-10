@@ -17,7 +17,6 @@ class Amazon(Scraper):
             try:
                 await page.goto(
                     f"https://www.amazon.com/s?k={isbn}&i=stripbooks",
-                    timeout=12000,
                     wait_until="domcontentloaded",
                 )
 

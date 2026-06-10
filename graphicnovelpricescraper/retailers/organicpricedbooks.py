@@ -9,6 +9,7 @@ class OrganicPricedBooks(Scraper):
                 raise RuntimeError("Context not initialized!")
 
             page = await self.context.new_page()
+            page.set_default_timeout(12000)
 
             price = None
             url = None
@@ -16,7 +17,6 @@ class OrganicPricedBooks(Scraper):
             try:
                 await page.goto(
                     f"https://www.panelboundcomics.com/search?q={title}",
-                    timeout=12000,
                     wait_until="domcontentloaded",
                 )
 
