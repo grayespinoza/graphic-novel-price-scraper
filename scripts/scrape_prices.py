@@ -35,11 +35,20 @@ async def main():
         ]
 
         for retailer in retailers:
-            for isbn, title in isbns:
-                price = await retailer.scrape(isbn, title)
-                prices.append(price)
+            await retailer.create_context()
 
-        await browser.close()
+        try:
+            tasks = [
+                retailer.scrape(int(isbn), title)
+                for retailer in retailers
+                for isbn, title in isbns
+            ]
+            prices = await asyncio.gather(*tasks)
+        finally:
+            for retailer in retailers:
+                if retailer.context is not None:
+                    await retailer.context.close()
+            await browser.close()
 
     with open(
         f"prices_{datetime.now(ZoneInfo('America/Los_Angeles')).strftime('%y%m%d')}.csv",

@@ -9,7 +9,7 @@ cur.execute("DROP TABLE IF EXISTS prices")
 
 cur.execute("""
 CREATE TABLE graphic_novels (
-    isbn TEXT PRIMARY KEY,
+    isbn INTEGER PRIMARY KEY,
     title TEXT
 )
 """)
@@ -18,7 +18,7 @@ cur.execute("""
 CREATE TABLE prices (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date INTEGER,
-    isbn TEXT,
+    isbn INTEGER,
     retailer TEXT,
     price REAL,
     url TEXT,
@@ -49,7 +49,7 @@ with open(
     reader = csv.DictReader(csvfile)
 
     for row in reader:
-        isbn = row["isbn"].strip()
+        isbn = int(row["isbn"])
         if row["title"] and row["title"].strip():
             title = row["title"].strip()
         else:

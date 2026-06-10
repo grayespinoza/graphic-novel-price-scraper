@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class GraphicNovel:
-    isbn: str
+    isbn: int
     retailer: str
     title: str | None = None
     price: float | None = None
