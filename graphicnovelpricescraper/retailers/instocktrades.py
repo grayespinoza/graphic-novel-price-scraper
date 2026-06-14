@@ -1,4 +1,3 @@
-import re
 from urllib.parse import quote_plus
 
 from graphicnovelpricescraper.data import GraphicNovel
@@ -12,6 +11,7 @@ class InStockTrades(Scraper):
                 raise RuntimeError("Context not initialized!")
 
             page = await self.context.new_page()
+            page.set_default_timeout(12000)
 
             price = None
             url = None
@@ -22,35 +22,39 @@ class InStockTrades(Scraper):
                     wait_until="domcontentloaded",
                 )
 
-                title_text = await page.locator(".title").first.inner_text()
+                title = await page.locator(".title").first.inner_text()
 
-                if title_text:
-                    title_text = title_text.lower()
-                    title_text = re.sub(r"\b(tp|hc)\b", "", title_text)
-                    title_text = re.sub(r"[^a-z0-9\s]", " ", title_text)
-                    title_text = re.sub(r"\s+", " ", title_text).strip()
+                price_text = await page.locator(".price").first.inner_text()
+                if price_text:
+                    price_text = price_text.strip()
+                    price = float(price_text.replace("$", ""))
 
-                title = title.lower()
-                title = re.sub(r"[^a-z0-9\s]", " ", title)
-                title = re.sub(r"\s+", " ", title).strip()
+                href = await page.locator(".title a").first.get_attribute("href")
+                if href:
+                    href = href.strip().split("?", 1)[0]
+                    url = f"https://www.instocktrades.com{href}"
 
-                if title in title_text:
-                    title = await page.locator(".title").first.inner_text()
+                try:
+                    await page.goto(url, wait_until="domcontentloaded")
 
-                    price_text = await page.locator(".price").first.inner_text()
-                    if price_text:
-                        price_text = price_text.strip()
-                        price = float(price_text.replace("$", ""))
+                    upc = await page.locator(".upc").text_content()
+                    if upc:
+                        upc = int(upc.replace("UPC:", "").strip())
 
-                    href = await page.locator(".title a").first.get_attribute("href")
-                    if href:
-                        href = href.strip().split("?", 1)[0]
-                        url = f"https://www.instocktrades.com{href}"
-                else:
+                    if upc != isbn:
+                        title = ""
+                        price = None
+                        url = None
+                except Exception as e:
+                    print(f"Unable to verify {isbn} from In Stock Trades: {e}")
                     title = ""
+                    price = None
+                    url = None
             except Exception as e:
                 print(f"Unable to scrape {isbn} from In Stock Trades: {e}")
                 title = ""
+                price = None
+                url = None
             finally:
                 await page.close()
 
