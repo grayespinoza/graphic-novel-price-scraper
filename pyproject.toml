@@ -36,3 +36,12 @@ dev = [
   "ty>=0.0.40",
   "tox>=4.55.0",
 ]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
