@@ -23,9 +23,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
       - name: Install Dependencies
-        run: python -m pip install --upgrade pip setuptools tox
+        run: |
+          python -m pip install --upgrade pip setuptools playwright tox
+          playwright install --with-deps --only-shell
       - name: Run tox
-        run: tox
+        run: tox -p auto
   analyze:
     runs-on: [ubuntu-latest]
     permissions:

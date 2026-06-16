@@ -34,6 +34,8 @@ dev = [
   "ruff>=0.15.14",
   "codespell>=2.4.2",
   "ty>=0.0.40",
+  "pytest>=9.1.0",
+  "pytest-asyncio>=1.4.0",
   "tox>=4.55.0",
 ]
 
@@ -45,3 +47,4 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "-ra"
