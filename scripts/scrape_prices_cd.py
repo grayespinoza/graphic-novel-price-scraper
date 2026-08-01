@@ -29,7 +29,7 @@ async def main():
         retailers_classes = [
             CheapGraphicNovels,
             BarnesAndNoble,
-            OrganicPricedBooks,
+            #OrganicPricedBooks,
             Amazon,
             InStockTrades,
         ]
